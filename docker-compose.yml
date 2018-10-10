@@ -1,0 +1,11 @@
+---
+jackett:
+    build: .
+    container_name: 'jackett'
+    volumes:
+        - './data/config:/config'
+        - './data/downloads:/media/downloads'
+    ports:
+        - 9117:9117
+    restart: 'always'
+
