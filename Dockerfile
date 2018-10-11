@@ -1,24 +1,21 @@
-FROM orbnedron/mono-stretch-slim
+FROM orbnedron/mono-alpine
 MAINTAINER orbnedron
 
 # Define version of Jackett
 ARG VERSION=0.10.273
 
-# Other Arguments
-ARG DEBIAN_FRONTEND=noninteractive
-
 # Install applications and some dependencies
-RUN apt-get update -q \
-    && apt-get install -qy procps libcurl4-openssl-dev curl libmono-system-runtime-interopservices-runtimeinformation4.0-cil \
-    && curl -L -o /tmp/jackett.tar.gz https://github.com/Jackett/Jackett/releases/download/v${VERSION}/Jackett.Binaries.Mono.tar.gz \
-    && tar xzf /tmp/jackett.tar.gz -C /tmp/ \
-    && mv /tmp/Jackett /opt/jackett \
-    && cp /usr/lib/mono/4.5/System.Runtime.InteropServices.RuntimeInformation.dll /opt/jackett/ \
-    && apt-get -y autoremove \
-    && apt-get -y clean \
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/tmp/* \
-    && rm -rf /tmp/*
+RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
+#    apk add --no-cache curl-dev
+    curl -L -o /tmp/jackett.tar.gz https://github.com/Jackett/Jackett/releases/download/v${VERSION}/Jackett.Binaries.Mono.tar.gz && \
+    tar xzf /tmp/jackett.tar.gz -C /tmp/ && \
+    mkdir /opt && \
+    mv /tmp/Jackett /opt/jackett && \
+    cp /usr/lib/mono/4.5/Facades/System.Runtime.InteropServices.RuntimeInformation.dll /opt/jackett/ && \
+    rm -rf /var/tmp/* && \
+    rm -rf /var/cache/apk/* && \
+    rm -rf /tmp/* && \
+    apk del .package-dependencies
 
 # Add start file
 ADD start.sh /start.sh
