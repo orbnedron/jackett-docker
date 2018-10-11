@@ -9,7 +9,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Install applications and some dependencies
 RUN apt-get update -q \
-    && apt-get install -qy procps libcurl4-openssl-dev curl \
+    && apt-get install -qy procps libcurl4-openssl-dev curl libmono-system-runtime-interopservices-runtimeinformation4.0-cil \
     && curl -L -o /tmp/jackett.tar.gz https://github.com/Jackett/Jackett/releases/download/v${VERSION}/Jackett.Binaries.Mono.tar.gz \
     && tar xzf /tmp/jackett.tar.gz -C /tmp/ \
     && mv /tmp/Jackett /opt/jackett \
