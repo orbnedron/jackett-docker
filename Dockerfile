@@ -2,7 +2,7 @@ FROM orbnedron/mono-alpine
 MAINTAINER orbnedron
 
 # Define version of Jackett
-ARG VERSION=0.10.273
+ARG VERSION=0.10.509
 
 # Install applications and some dependencies
 RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
