@@ -2,14 +2,14 @@ FROM orbnedron/mono-alpine
 MAINTAINER orbnedron
 
 # Define version of Jackett
-ARG VERSION=0.10.509
+ARG VERSION=0.10.907
 
 # Install applications and some dependencies
 RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
 #    apk add --no-cache curl-dev
     curl -L -o /tmp/jackett.tar.gz https://github.com/Jackett/Jackett/releases/download/v${VERSION}/Jackett.Binaries.Mono.tar.gz && \
     tar xzf /tmp/jackett.tar.gz -C /tmp/ && \
-    mkdir /opt && \
+    mkdir -p /opt && \
     mv /tmp/Jackett /opt/jackett && \
     cp /usr/lib/mono/4.5/Facades/System.Runtime.InteropServices.RuntimeInformation.dll /opt/jackett/ && \
     rm -rf /var/tmp/* && \
