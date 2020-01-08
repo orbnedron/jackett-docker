@@ -1,8 +1,8 @@
-FROM orbnedron/mono-alpine
+FROM orbnedron/mono-alpine:v5.20.1.19
 MAINTAINER orbnedron
 
 # Define version of Jackett
-ARG VERSION=0.11.200
+ARG VERSION=0.12.1494
 
 # Install applications and some dependencies
 RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
@@ -12,6 +12,7 @@ RUN apk add --no-cache  --virtual=.package-dependencies curl tar gzip && \
     mkdir -p /opt && \
     mv /tmp/Jackett /opt/jackett && \
     cp /usr/lib/mono/4.5/Facades/System.Runtime.InteropServices.RuntimeInformation.dll /opt/jackett/ && \
+    ln -s /usr/lib/libmono-native.so.0 /usr/lib/libmono-native.so && \
     rm -rf /var/tmp/* && \
     rm -rf /var/cache/apk/* && \
     rm -rf /tmp/* && \
