@@ -24,6 +24,7 @@ XDG_CONFIG_HOME="/config"
 
 if [ "$(id -u)" = "0" ]; then
   chown -R jackett:jackett /config
+  chown -R jackett /opt/jackett
   set -- gosu jackett:jackett "$@"
 fi
 
