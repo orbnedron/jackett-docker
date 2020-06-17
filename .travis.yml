@@ -13,8 +13,7 @@ services:
 
 before_script:
   # Find a better solution to get latest version
-  - export JACKETT_VERSION="$(curl -s https://github.com/Jackett/Jackett/releases | grep "/Jackett/Jackett/releases/tag/" | head -n1 | sed -e 's/<a href="\/Jackett/Jackett\/releases\/tag\/v//g' | sed -e 's/">//g' | tr -d '[:space:]')"
-  - docker pull $IMAGE_NAME || true
+  - export JACKETT_VERSION="$(curl -s https://github.com/Jackett/Jackett/releases | grep "/Jackett/Jackett/releases/tag/" | head -n1 | sed -e 's/<a .*>v//g' | sed -e 's/<\/a>//g' | tr -d '[:space:]')"
 script:
   - docker build --build-arg JACKETT_VERSION=${JACKETT_VERSION} --pull --cache-from $IMAGE_NAME --tag $IMAGE_NAME .
   - docker run --name jackett -d -p 8989:8989 ${IMAGE_NAME}
