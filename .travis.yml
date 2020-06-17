@@ -16,7 +16,7 @@ before_script:
   - export JACKETT_VERSION="$(curl -s https://github.com/Jackett/Jackett/releases | grep "/Jackett/Jackett/releases/tag/" | head -n1 | sed -e 's/<a .*>v//g' | sed -e 's/<\/a>//g' | tr -d '[:space:]')"
 script:
   - docker build --build-arg JACKETT_VERSION=${JACKETT_VERSION} --pull --cache-from $IMAGE_NAME --tag $IMAGE_NAME .
-  - docker run --name jackett -d -p 8989:8989 ${IMAGE_NAME}
+  - docker run --name jackett -d -p 9117:9117 ${IMAGE_NAME}
   - sleep 20
   - docker logs jackett
   - curl --retry 20 --retry-connrefused --retry-delay 3 -s http://localhost:9117 >/dev/null 2>&1
