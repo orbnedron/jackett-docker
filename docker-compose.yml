@@ -15,6 +15,6 @@ services:
         - 9117:9117
     restart: 'unless-stopped'
 #    environment:
-#      - JACKETT_USER_ID=1000
-#      - JACKETT_GROUP_ID=1000
+#      - JACKETT_USER_ID=123
+#      - JACKETT_GROUP_ID=100
 
