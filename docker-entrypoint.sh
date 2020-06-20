@@ -13,8 +13,8 @@ set -e
 # who ran `docker` on the host, and so any output files will have the correct
 # permissions.
 
-USER_ID=${JACKETT_USER_ID:-1000}
-GROUP_ID=${JACKETT_GROUP_ID:-1000}
+USER_ID=${JACKETT_USER_ID:-100}
+GROUP_ID=${JACKETT_GROUP_ID:-10}
 
 echo "Starting with UID : $USER_ID, GID: $GROUP_ID"
 
@@ -28,7 +28,8 @@ fi
 
 if [ 1 -gt $(cat /etc/passwd | awk -F ":" '{ print $3 }' | grep -w $USER_ID | wc -l) ]; then
   echo "Creating user jackett"
-  adduser --shell /bin/sh --uid $USER_ID --disabled-password -G $GROUP_ID jackett
+  GROUP_NAME=$(cat /etc/group | awk -F ":" '{ print $1,$3 }' | grep -w $GROUP_ID | awk '{ print $1 }')
+  adduser --shell /bin/sh --uid $USER_ID --disabled-password --no-create-home -G $GROUP_NAME jackett
 else
   echo "User id $USER_ID already exist, using that"
 fi
