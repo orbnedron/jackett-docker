@@ -13,8 +13,8 @@ set -e
 # who ran `docker` on the host, and so any output files will have the correct
 # permissions.
 
-USER_ID=${JACKETT_USER_ID:-100}
-GROUP_ID=${JACKETT_GROUP_ID:-10}
+USER_ID=${JACKETT_USER_ID:-1000}
+GROUP_ID=${JACKETT_GROUP_ID:-1000}
 
 echo "Starting with UID : $USER_ID, GID: $GROUP_ID"
 
