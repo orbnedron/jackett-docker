@@ -17,7 +17,7 @@ else
   echo "Push latest OK"
 fi
 
-docker push "${IMAGE_NAME}":v"${JACKETT_VERSION}"
+docker push "${IMAGE_NAME}":"${JACKETT_VERSION}"
 if [ $? -ne 0 ]; then
   echo "Push versioned failed"
   exit 3

@@ -1,24 +1,27 @@
+#FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine
 FROM alpine:latest
 MAINTAINER orbnedron
 
 # Define version of Jackett
 ARG JACKETT_VERSION
 
-#   Install support applications
-RUN apk add --no-cache mono gosu curl --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing && \
-    apk add --no-cache mediainfo tinyxml2 --repository http://dl-cdn.alpinelinux.org/alpine/edge/community && \
-    # Install ca-certificates
-    apk add --no-cache --virtual=.build-dependencies ca-certificates && \
-    cert-sync /etc/ssl/certs/ca-certificates.crt && \
+##   Install support applications
+RUN apk add --no-cache gosu curl --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing && \
+    apk add --no-cache mediainfo tinyxml2  --repository http://dl-cdn.alpinelinux.org/alpine/edge/community && \
+    apk add --no-cache ca-certificates libc6-compat icu-libs krb5-libs libintl libssl1.1 libstdc++ lttng-ust numactl zlib procps && \
     # Download and install Jackett
-    apk add --no-cache --virtual=.package-dependencies tar gzip && \
-    curl -L -o /tmp/jackett.tar.gz https://github.com/Jackett/Jackett/releases/download/v${JACKETT_VERSION}/Jackett.Binaries.Mono.tar.gz && \
+    apk add --no-cache --virtual=.package-dependencies tar gzip jq && \
+    if [ -z ${JACKETT_VERSION+x} ]; then \
+    	JACKETT_VERSION=$(curl -sX GET https://api.github.com/repos/Jackett/Jackett/releases/latest \
+    	| jq -r .tag_name); \
+    fi && \
+    curl -L -o /tmp/jackett.tar.gz https://github.com/Jackett/Jackett/releases/download/${JACKETT_VERSION}/Jackett.Binaries.LinuxAMDx64.tar.gz && \
     tar xzf /tmp/jackett.tar.gz -C /tmp/ && \
     mkdir -p /opt && \
     mv /tmp/Jackett /opt/jackett && \
-    # Fix dependency
-    cp /usr/lib/mono/4.5/Facades/System.Runtime.InteropServices.RuntimeInformation.dll /opt/jackett/ && \
-    ln -s /usr/lib/libmono-native.so.0 /usr/lib/libmono-native.so && \
+    if [ ! -d "/config" ]; then \
+        mkdir "/config"; \
+    fi && \
     # Cleanup
     rm -rf /var/tmp/* && \
     rm -rf /var/cache/apk/* && \
@@ -36,6 +39,6 @@ EXPOSE 9117
 WORKDIR /media/downloads
 
 # Define default start command
-CMD ["mono", "--debug", "/opt/jackett/JackettConsole.exe", "-d", "/config", "-t", "-l"]
+CMD ["/opt/jackett/jackett", "--NoUpdates"]
 
 

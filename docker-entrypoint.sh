@@ -34,12 +34,19 @@ else
   echo "User id $USER_ID already exist, using that"
 fi
 
+export XDG_CONFIG_HOME="/config"
+export XDG_DATA_HOME="/config"
 
-XDG_CONFIG_HOME="/config"
+#if [ -z ${AUTO_UPDATE+x} ] || [ "${AUTO_UPDATE}" == "true" ]; then
+#	COMMAND="/opt/jackett/jackett_launcher.sh"
+#else
+#	COMMAND="/opt/jackett/jackett --NoUpdates"
+#fi
 
 if [ "$(id -u)" = "0" ]; then
   chown -R $USER_ID:$GROUP_ID /config
   chown -R $USER_ID:$GROUP_ID /opt/jackett
+#  set -- gosu $USER_ID:$GROUP_ID "$COMMAND"
   set -- gosu $USER_ID:$GROUP_ID "$@"
 fi
 

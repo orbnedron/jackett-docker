@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - JACKETT_VERSION=0.16.722
+        - JACKETT_VERSION=v0.16.783
     container_name: "jackett"
     volumes:
         - './data/config:/config'
@@ -14,7 +14,7 @@ services:
     ports:
         - 9117:9117
     restart: 'unless-stopped'
-#    environment:
-#      - JACKETT_USER_ID=123
-#      - JACKETT_GROUP_ID=100
+    environment:
+      - JACKETT_USER_ID=500
+      - JACKETT_GROUP_ID=20
 
