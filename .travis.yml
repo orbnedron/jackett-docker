@@ -2,6 +2,10 @@ dist: bionic
 os: linux
 language: shell
 
+branches:
+  only:
+    - master
+
 env:
   global:
     - IMAGE_NAME="orbnedron/jackett"
