@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - JACKETT_VERSION=0.16.722
+        - JACKETT_VERSION=v0.16.722
     container_name: "jackett"
     volumes:
         - './data/config:/config'
