@@ -14,7 +14,7 @@ services:
 notifications:
   email:
     recipients:
-      - orbnrdron@nordenbro.com
+      - orbnedron@nordenbro.com
     on_success: change
     on_failure: always
 
