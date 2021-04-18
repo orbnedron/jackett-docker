@@ -18,7 +18,6 @@ RUN apk add --no-cache mono gosu curl --repository http://dl-cdn.alpinelinux.org
     mv /tmp/Jackett /opt/jackett && \
     # Fix dependency
     cp /usr/lib/mono/4.5/Facades/System.Runtime.InteropServices.RuntimeInformation.dll /opt/jackett/ && \
-    ln -s /usr/lib/libmono-native.so.0 /usr/lib/libmono-native.so && \
     # Cleanup
     rm -rf /var/tmp/* && \
     rm -rf /var/cache/apk/* && \
