@@ -3,7 +3,7 @@
 <img src="https://badgen.net/docker/pulls/orbnedron/jackett"> <a href="https://hub.docker.com/repository/docker/orbnedron/jackett"><img src="https://badgen.net/badge/icon/docker?icon=docker&label"/></a> <a href="https://travis-ci.org/github/orbnedron/jackett-docker"><img src="https://badgen.net/travis/orbnedron/jackett-docker?icon=travis&label=build"/></a>
 
 # Important notice
-
+ 
 Versions of this docker image published after 2020-06-15 does not run Jackett as root anymore, this might cause permission errors.
 
 # About
